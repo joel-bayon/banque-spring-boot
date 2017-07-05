@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="fr" ng-app="banqueApp">
+<head>
+<meta charset="utf-8" />
+<title>HelloUser</title>
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet"
+	href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
+<script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+<script src="js/angular/angular.min.js"></script>
+<script src="js/banqueApp.js"></script>
+</head>
+<body>
+	<header>
+		<h1 class="mdl-dialog__title">Welcome to AngularJS Banque</h1>
+	</header>
+	<section ng-controller="banqueCtrl" ng-init="getComptes()">
+		<article ng-if="comptes">
+			<div class="mdl-dialog">
+				<h2>Liste des comptes</h2>
+				<table
+					class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp">
+					<tr>
+						<td style="width: 50px"><b>N° cpt</b></td>
+						<td style="width: 100px"><b>Solde</b></td>
+					</tr>
+					<!-- Construction dynamique du contenu du tableau de comptes -->
+					<tr ng-repeat="compte in comptes">
+						<td
+							style="color: blue; text-decoration: underline; cursor: pointer;"
+							ng-click="getCompte(compte.numero)">{{compte.numero}}</td>
+						<!-- <td >{{personne.id}}</td> -->
+						<td>{{compte.solde}}</td>
+					</tr>
+				</table>
+			</div>
+		</article>
+
+		<div class="mdl-dialog" ng-if="compte">
+			<h4>Edition du compte N° {{compte.numero}}</h4>
+			<div class="mdl-dialog__content">
+				Solde courant = <b>{{compte.solde}}</b>
+			</div>
+			Entrez un montant : </label><input ng-model="montant" /><br />
+			<div class="mdl-dialog__actions">
+				<button ng-click="operation(montant, 'crediter')"
+					class="mdl-button mdl-button--raised mdl-button--colored">Créditer</button>
+				<button ng-click="operation(montant, 'debiter')"
+					class="mdl-button mdl-button--raised mdl-button--colored">Débiter</button>
+				<button ng-click="reset()"
+					class="mdl-button mdl-button--raised mdl-button--accent">Liste
+					des comptes</button>
+			</div>
+		</div>
+	</section>
+</body>
+</html>
